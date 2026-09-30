@@ -78,7 +78,15 @@ reticle.connect({
 });
 ```
 
-These are Vite `define` identifiers replaced in application source, not runtime globals discovered by the SDK. The plugin provides them so a hand-written connection can use the same build-time values.
+Add ambient declarations for these identifiers to `src/vite-env.d.ts` (or another included `.d.ts`) in a TypeScript app:
+
+```ts
+declare const __RETICLE_TOKEN__: string;
+declare const __RETICLE_ROOT__: string;
+declare const __RETICLE_SDK_VERSION__: string;
+```
+
+Vite replaces these `define` identifiers in application source at build time; the declarations let TypeScript typecheck them and do not create runtime globals. The SDK does not discover the pairing token, so pass it explicitly in a hand-written connection:
 
 ## Other exports
 
